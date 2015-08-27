@@ -121,6 +121,8 @@ Tron.board.prototype.tied = function () {
   for (var i = 0; i < cycSegs.length; i++) {
     for (var j = 0; j < aiSegs.length; j++) {
       if (cycSegs[i][0] === aiSegs[j][0] && cycSegs[i][1] === aiSegs[j][1]) {
+        that.cycle.hit = true;
+        that.ai.hit = true;
         return true;
       }
     }

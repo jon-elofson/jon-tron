@@ -7,10 +7,29 @@
     this.board = new Tron.board();
     this.ai = new Tron.ai(this.board);
     this.$el = $(el);
+    this.yourLives = 3;
+    this.aiLives = 3;
+    this.gameOver = false;
     this.setupBoard();
     this.drawBoard();
     this.setKeyHandlers();
     this.start();
+  };
+
+  View.prototype.checkWinner = function () {
+    if (this.yourLives === 0) {
+      return "The computer";
+    } else if (this.aiLives === 0) {
+      return "You";
+    }
+  };
+
+  View.prototype.checkGameOver = function () {
+    if (this.yourLives === 0 || this.aiLives === 0) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   View.prototype.bindEvents = function () {
@@ -60,12 +79,32 @@
 
 
   View.prototype.setupBoard = function () {
+    this.addLives();
     this.addSquares();
     this.addButton();
   };
 
+  View.prototype.addLives = function () {
+    var $lives = $("<h3>").addClass("lives");
+    var str = this.determineLivesString();
+    $lives.text(str);
+    this.$el.append($lives);
+  };
+
+  View.prototype.determineLivesString = function () {
+    var str = "AI Lives: ";
+    for (var i = 0; i < this.aiLives; i++) {
+      str += "▲ ";
+    }
+    str += "      | Your Lives: ";
+    for (var j = 0; j < this.yourLives; j++) {
+      str += "▲ ";
+    }
+    return str;
+  };
+
   View.prototype.addButton = function () {
-    var $button = $("<button>").text("Try Again");
+    var $button = $("<button>").text("Play Again");
     $button.on("click",this.restart.bind(this));
     this.$el.append($button);
   };
@@ -89,7 +128,9 @@
     this.board = new Tron.board();
     this.ai = new Tron.ai(this.board);
     this.drawBoard();
-    this.setKeyHandlers();
+    this.$el.remove("h3.lives");
+    this.$el.find(".lives").html(this.determineLivesString());
+    this.start();
   };
 
   View.prototype.start = function () {
@@ -99,18 +140,37 @@
 };
 
   View.prototype.run = function () {
+    this.drawBoard();
     if (this.board.isGameOver()) {
-      this.drawBoard();
-      $button = $(this.$el.find("button"));
-      $button.css({"display": "block"});
-    } else {
-      this.drawBoard();
+      this.determineWinner();
+      clearInterval(this.interval);
+      if (this.checkGameOver() === false) {
+        $button = $(this.$el.find("button"));
+        $button.css({"display": "block"});
+      } else {
+        this.roundOver();
+      }
     }
     if (this.board.isGameOver() === false) {
       this.board.cycle.move();
       var nextDir = this.ai.decideDir();
       this.board.ai.dir = nextDir;
       this.board.ai.move();
+    }
+  };
+
+
+  View.prototype.roundOver = function () {
+    var winner = this.checkWinner();
+    this.$el.find(".lives").html(winner + " won!");
+  };
+
+  View.prototype.determineWinner = function () {
+    if (this.board.cycle.hit || this.board.cycle.outOfBounds) {
+      this.yourLives -= 1;
+    }
+    if (this.board.ai.hit || this.board.ai.outOfBounds) {
+      this.aiLives -= 1;
     }
   };
 
@@ -122,9 +182,6 @@
     key('left',function () {if (cycle.dir != "E") {cycle.dir = "W";}});
     key('right',function () {if (cycle.dir != "W") {cycle.dir = "E";}});
   };
-
-
-
 
 
 })();

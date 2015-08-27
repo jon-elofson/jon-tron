@@ -1,5 +1,5 @@
 html {
-  background-color: pink;
+  background-color: lightgray;
   color: white;
 }
 
@@ -19,7 +19,7 @@ h1 {
   top: 15%;
   width: 490px;
   background-color: #D6EBFF;
-  border: 2px solid lightgray;
+  border: 1px solid black;
   margin: auto;
 }
 
@@ -35,14 +35,20 @@ h1 {
   background-color: yellow;
 }
 
+.trongame h3.lives {
+  font-family: arial;
+  text-align: center;
+}
+
 
 .trongame button {
   display: none;
-  background: #C2A3FF;
+  background: #FF3D3D;;
   border-radius: 4px;
   font-family: Arial;
   color: #ffffff;
   font-size: 20px;
+  top: 15px;
   text-align: center;
   margin: auto;
   position: relative;
