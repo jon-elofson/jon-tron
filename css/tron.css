@@ -1,0 +1,94 @@
+html {
+  background-color: pink;
+  color: white;
+}
+
+h1 {
+  font-family: arial;
+  position: relative;
+  margin: auto;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.trongame ul {
+  padding: 0px;
+  height: 490px;
+  display: block;
+  top: 15%;
+  width: 490px;
+  background-color: #D6EBFF;
+  border: 2px solid lightgray;
+  margin: auto;
+}
+
+.trongame div.grid-square {
+  display: block;
+  float: left;
+  height: 7px;
+  width: 7px;
+  position: relative;
+}
+
+.trongame div.crash {
+  background-color: yellow;
+}
+
+
+.trongame button {
+  display: none;
+  background: #C2A3FF;
+  border-radius: 4px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  margin: auto;
+  position: relative;
+  border: none;
+}
+
+.trongame button:hover {
+  background: #FFCC66;
+}
+
+.trongame div.cycle {
+  background-color: #33D685;
+}
+
+.trongame div.ai {
+  background-color: magenta;
+}
+
+.trongame div.empty-square {
+  background-color
+}
+
+h2 {
+  font-family: arial;
+  text-align: center;
+}
+
+h3.leader-board-header {
+  color: lightgray;
+  font-family: arial;
+  text-align: center;
+  border-bottom: 2px solid lightgray;
+}
+
+h4.high-score {
+  color: lightgray;
+  font-family: arial;
+  text-align: center;;
+}
+
+div.leader-board {
+  background-color: white;
+  display: inline-block;
+  border-radius: 8px;
+  height: 30vw;
+  width: 25vh;
+  margin-left: 10%;
+  margin-right: 20px;
+}
