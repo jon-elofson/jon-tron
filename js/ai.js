@@ -6,6 +6,7 @@
   var ai = window.Tron.ai = function (board) {
     this.board = board;
     this.cycle = this.board.ai;
+    this.firstDirs = ["E","N","S"];
   };
 
   Tron.ai.prototype.dirOptions = function (pos) {
@@ -17,6 +18,10 @@
   };
 
   Tron.ai.prototype.decideDir = function () {
+    if (this.cycle.segments.length === 1) {
+      var randIdx = Math.floor(Math.random() * this.firstDirs.length);
+      return this.firstDirs[randIdx];
+    }
     var currPos = this.cycle.segments[0];
     var options = this.dirOptions(currPos);
     var validOptions = [];
@@ -49,7 +54,7 @@
             }
         }
         var hugSelection = Math.floor(Math.random() * wallHugs.length);
-        if (this.losingPosition(options[dirs[hugSelection]]) === false) {
+        if (this.losingPosition(options[wallHugs[hugSelection]]) === false) {
           return wallHugs[hugSelection];
         }
       }
@@ -64,6 +69,7 @@
 
   Tron.ai.prototype.losingPosition = function (pos) {
     var otherPlayer = this.board.cycle.segments[0];
+    if (otherPlayer[0] === pos[0] && otherPlayer[1] === pos[1]) { return true;}
     var options = this.dirOptions(pos);
     var result = false;
     for (var opt in options) {
