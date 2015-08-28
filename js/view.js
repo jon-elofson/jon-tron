@@ -81,7 +81,16 @@
   View.prototype.setupBoard = function () {
     this.addLives();
     this.addSquares();
+    this.addGameInstructions();
     this.addButton();
+  };
+
+  View.prototype.addGameInstructions = function () {
+    var str = " ▲ ▼ ◀ ▶ Use the arrow keys to navigate";
+    var $h3Keys = $("<h3>").addClass("instructions").html(str);
+    var spaceStr = "Press the SPACE bar to start a new game";
+    var $h3Space = $("<h3>").addClass("instructions").html(spaceStr);
+    this.$el.append($h3Keys).append($h3Space);
   };
 
   View.prototype.addLives = function () {
@@ -163,6 +172,11 @@
   View.prototype.roundOver = function () {
     var winner = this.checkWinner();
     this.$el.find(".lives").html(winner + " won!");
+    $button = $(this.$el.find("button"));
+    $button.css({"display": "block"});
+    this.aiLives = 3;
+    this.yourLives = 3;
+    $button.html("New Round!");
   };
 
   View.prototype.determineWinner = function () {
@@ -177,10 +191,12 @@
 
   View.prototype.setKeyHandlers = function () {
     var cycle = this.board.cycle;
+    var that = this;
     key('up',function () {if (cycle.dir != "S") {cycle.dir = "N";}});
     key('down',function () {if (cycle.dir != "N") {cycle.dir = "S";}});
     key('left',function () {if (cycle.dir != "E") {cycle.dir = "W";}});
     key('right',function () {if (cycle.dir != "W") {cycle.dir = "E";}});
+    key('space',function () {if (that.checkGameOver()) {that.restart();}});
   };
 
 

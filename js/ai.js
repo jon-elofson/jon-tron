@@ -18,10 +18,6 @@
   };
 
   Tron.ai.prototype.decideDir = function () {
-    if (this.cycle.segments.length === 1) {
-      var randIdx = Math.floor(Math.random() * this.firstDirs.length);
-      return this.firstDirs[randIdx];
-    }
     var currPos = this.cycle.segments[0];
     var options = this.dirOptions(currPos);
     var validOptions = [];
