@@ -156,6 +156,7 @@
       if (this.checkGameOver() === false) {
         $button = $(this.$el.find("button"));
         $button.css({"display": "block"});
+        $button.html('Play Again!')
       } else {
         this.roundOver();
       }
@@ -196,7 +197,7 @@
     key('down',function () {if (cycle.dir != "N") {cycle.dir = "S";}});
     key('left',function () {if (cycle.dir != "E") {cycle.dir = "W";}});
     key('right',function () {if (cycle.dir != "W") {cycle.dir = "E";}});
-    key('space',function () {if (that.checkGameOver()) {that.restart();}});
+    key('space',function () {if (that.board.isGameOver()) {that.restart();}});
   };
 
 

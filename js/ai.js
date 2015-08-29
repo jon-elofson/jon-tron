@@ -17,9 +17,8 @@
     return {"N": nPos,"S":sPos,"W": wPos, "E":ePos};
   };
 
-  Tron.ai.prototype.decideDir = function () {
+  Tron.ai.prototype.findMoves = function (options) {
     var currPos = this.cycle.segments[0];
-    var options = this.dirOptions(currPos);
     var validOptions = [];
     var wallHugs = [];
     var counts = [];
@@ -32,30 +31,51 @@
           if (that.isWallHug(pos)) {
             wallHugs.push(opt);
           }
-          var optCount = this.countOptions(pos,currPos);
-          counts.push([opt,optCount]);
+          var optArea = this.countArea(pos,currPos);
+          counts.push([opt,optArea]);
         }
       }
     }
+    return {'validOptions': validOptions, 'wallHugs': wallHugs,
+    'counts': counts};
+  };
+
+  Tron.ai.prototype.makeWallHug = function (wallHugs,bestCounts,options) {
+    var cDir = this.cycle.dir;
+    var random = Math.random();
+    if (wallHugs.indexOf(cDir) !== -1 && bestCounts.indexOf(cDir) !== -1 && random < 0.9) {
+        return cDir;
+      } else {
+        for (var i = 0; i < bestCounts.length; i++) {
+          if (wallHugs.indexOf(bestCounts[i]) !== -1) {
+            return bestCounts[i];
+          }
+      }
+      var hugSelection = Math.floor(Math.random() * wallHugs.length);
+      if (this.losingPosition(options[wallHugs[hugSelection]]) === false) {
+        return wallHugs[hugSelection];
+      }
+    }
+  };
+
+  Tron.ai.prototype.decideDir = function () {
+    var currPos = this.cycle.segments[0];
+    var options = this.dirOptions(currPos);
+    var moves = this.findMoves(options);
+    var validOptions = moves['validOptions'];
+    var wallHugs = moves['wallHugs'];
+    var counts = moves['counts'];
     if (counts.length === 0) { return this.cycle.dir; }
     var bestCounts = this.findHighestCount(counts);
     var cDir = this.cycle.dir;
-    if (wallHugs.length > 0) {
-      if (wallHugs.indexOf(cDir) !== -1 && bestCounts.indexOf(cDir) !== -1) {
-          return cDir;
-        } else {
-          for (var i = 0; i < bestCounts.length; i++) {
-            if (wallHugs.indexOf(bestCounts[i]) !== -1) {
-              return bestCounts[i];
-            }
-        }
-        var hugSelection = Math.floor(Math.random() * wallHugs.length);
-        if (this.losingPosition(options[wallHugs[hugSelection]]) === false) {
-          return wallHugs[hugSelection];
-        }
+    var random = Math.random();
+    if (wallHugs.length > 0 && random < 0.999) {
+      var wh = this.makeWallHug(wallHugs,bestCounts,options);
+      if (wh) {
+        return wh;
       }
     }
-    if (bestCounts.indexOf(cDir) !== -1) {
+    if (bestCounts.indexOf(cDir) !== -1 && random < 0.9995) {
         return cDir;
       } else {
         var selection = Math.floor(Math.random() * bestCounts.length);
@@ -156,23 +176,51 @@
     }
   };
 
-  Tron.ai.prototype.countOptions = function (optPos,lastPos) {
+  Tron.ai.prototype.findLeft = function (pos) {
+    var result = 0;
+  };
+
+  Tron.ai.prototype.findRight = function (pos) {
+    var result = 0;
+
+  };
+
+  Tron.ai.prototype.findTop = function (pos) {
+    var result = 0;
+  };
+
+  Tron.ai.prototype.findBottom = function (pos) {
+    var result = 0;
+  };
+
+  Tron.ai.prototype.countArea = function (optPos,lastPos) {
     if (this.outOfBounds(optPos) || this.isSpaceOccupied(optPos)) {
       return 0;
     }
     var result = 0;
     var that = this;
-    var options = this.dirOptions(optPos);
-    for (var opt in options) {
-      var pos = options[opt];
-      if (that.outOfBounds(pos) === false) {
-        var boardVal = that.board.grid[pos[0]][pos[1]];
-        if (this.notLastPos(pos,lastPos) && boardVal === ".") {
-          result += 1;
-        }
-      }
-    }
-    return result;
+    var left = this.findLeft(pos);
+    var right = this.findRight(pos);
+    var top = this.findTop(pos);
+    var bottom = this.findBottom(pos);
+    var area = (left + right) * (top + bottom);
+    return area;
+
+    // var options = this.dirOptions(optPos);
+    // for (var opt in options) {
+    //   var pos = options[opt];
+    //   if (that.outOfBounds(pos) === false) {
+    //     var boardVal = that.board.grid[pos[0]][pos[1]];
+    //     if (this.notLastPos(pos,lastPos) && boardVal === ".") {
+    //       result += 1;
+    //       }
+    //   }
+    // }
+    // return result;
   };
+
+
+
+
 
 })();
