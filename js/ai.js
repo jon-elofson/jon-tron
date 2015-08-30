@@ -206,7 +206,6 @@
     if (this.outOfBounds(pos) || this.isSpaceOccupied(pos)) {
       return 0;
     }
-
     var result = 0;
     var that = this;
     var left = this.findBound(pos,'left');
