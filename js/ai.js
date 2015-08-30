@@ -68,13 +68,13 @@
     var bestCounts = this.findHighestCount(counts);
     var cDir = this.cycle.dir;
     var random = Math.random();
-    if (wallHugs.length > 0 && random < 0.80) {
+    if (wallHugs.length > 0 && random < 0.98) {
       var wh = this.makeWallHug(wallHugs,bestCounts,options);
       if (wh) {
         return wh;
       }
     }
-    if (bestCounts.indexOf(cDir) !== -1 && random < 0.9) {
+    if (bestCounts.indexOf(cDir) !== -1 && random < 0.99) {
         return cDir;
       } else {
         var selection = Math.floor(Math.random() * bestCounts.length);
@@ -103,7 +103,7 @@
     var bestOptions = [];
     var highestCount = sortedCounts[0][1];
     for (var i = 0; i < sortedCounts.length; i++) {
-      if (sortedCounts[i][1] === highestCount || (sortedCounts[i][1] > 50)) {
+      if (sortedCounts[i][1] === highestCount || (sortedCounts[i][1] > 30)) {
         bestOptions.push(sortedCounts[i]);
       }
     }
