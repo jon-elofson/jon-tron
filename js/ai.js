@@ -42,8 +42,7 @@
 
   Tron.ai.prototype.makeWallHug = function (wallHugs,bestCounts,options) {
     var cDir = this.cycle.dir;
-    var random = Math.random();
-    if (wallHugs.indexOf(cDir) !== -1 && bestCounts.indexOf(cDir) !== -1 && random < 0.9) {
+    if (wallHugs.indexOf(cDir) !== -1 && bestCounts.indexOf(cDir) !== -1) {
         return cDir;
       } else {
         for (var i = 0; i < bestCounts.length; i++) {
@@ -69,13 +68,13 @@
     var bestCounts = this.findHighestCount(counts);
     var cDir = this.cycle.dir;
     var random = Math.random();
-    if (wallHugs.length > 0 && random < 0.999) {
+    if (wallHugs.length > 0 && random < 0.95) {
       var wh = this.makeWallHug(wallHugs,bestCounts,options);
       if (wh) {
         return wh;
       }
     }
-    if (bestCounts.indexOf(cDir) !== -1 && random < 0.9995) {
+    if (bestCounts.indexOf(cDir) !== -1 && random < 0.999) {
         return cDir;
       } else {
         var selection = Math.floor(Math.random() * bestCounts.length);
@@ -104,7 +103,7 @@
     var bestOptions = [];
     var highestCount = sortedCounts[0][1];
     for (var i = 0; i < sortedCounts.length; i++) {
-      if (sortedCounts[i][1] === highestCount) {
+      if (sortedCounts[i][1] === highestCount || (sortedCounts[i][1] > 25)) {
         bestOptions.push(sortedCounts[i]);
       }
     }
@@ -176,47 +175,46 @@
     }
   };
 
-  Tron.ai.prototype.findLeft = function (pos) {
+  Tron.ai.prototype.findNextPos = function (pos,dirStr) {
+    if (dirStr === 'left') {
+      return [pos[0],pos[1]-1]
+    } else if (dirStr === 'right') {
+      return [pos[0],pos[1]+1]
+    } else if (dirStr === 'top') {
+      return [pos[0]-1,pos[1]]
+    } else if (dirStr === 'bottom') {
+      return [pos[0]+1,pos[1]]
+    }
+  }
+
+  Tron.ai.prototype.findBound = function (pos,dirStr) {
     var result = 0;
+    var newPos = this.findNextPos(pos,dirStr);
+    while (true) {
+      if (this.outOfBounds(newPos)) {return result;}
+      var boardVal = this.board.grid[newPos[0]][newPos[1]];
+      if (boardVal === ".") {
+        result += 1
+        newPos = this.findNextPos(newPos,dirStr);
+      } else {
+        return result;
+      }
+    }
   };
 
-  Tron.ai.prototype.findRight = function (pos) {
-    var result = 0;
-
-  };
-
-  Tron.ai.prototype.findTop = function (pos) {
-    var result = 0;
-  };
-
-  Tron.ai.prototype.findBottom = function (pos) {
-    var result = 0;
-  };
-
-  Tron.ai.prototype.countArea = function (optPos,lastPos) {
-    if (this.outOfBounds(optPos) || this.isSpaceOccupied(optPos)) {
+  Tron.ai.prototype.countArea = function (pos,lastPos) {
+    if (this.outOfBounds(pos) || this.isSpaceOccupied(pos)) {
       return 0;
     }
+
     var result = 0;
     var that = this;
-    var left = this.findLeft(pos);
-    var right = this.findRight(pos);
-    var top = this.findTop(pos);
-    var bottom = this.findBottom(pos);
+    var left = this.findBound(pos,'left');
+    var right = this.findBound(pos,'right');
+    var top = this.findBound(pos,'top');
+    var bottom = this.findBound(pos,'bottom');
     var area = (left + right) * (top + bottom);
     return area;
-
-    // var options = this.dirOptions(optPos);
-    // for (var opt in options) {
-    //   var pos = options[opt];
-    //   if (that.outOfBounds(pos) === false) {
-    //     var boardVal = that.board.grid[pos[0]][pos[1]];
-    //     if (this.notLastPos(pos,lastPos) && boardVal === ".") {
-    //       result += 1;
-    //       }
-    //   }
-    // }
-    // return result;
   };
 
 
