@@ -103,7 +103,7 @@
     var bestOptions = [];
     var highestCount = sortedCounts[0][1];
     for (var i = 0; i < sortedCounts.length; i++) {
-      if (sortedCounts[i][1] === highestCount || (sortedCounts[i][1] > 100)) {
+      if (sortedCounts[i][1] === highestCount || (sortedCounts[i][1] > 75)) {
         bestOptions.push(sortedCounts[i]);
       }
     }
