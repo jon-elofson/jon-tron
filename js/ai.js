@@ -68,7 +68,7 @@
     var bestCounts = this.findHighestCount(counts);
     var cDir = this.cycle.dir;
     var random = Math.random();
-    if (wallHugs.length > 0 && random < 0.95) {
+    if (wallHugs.length > 0 && random < 0.90) {
       var wh = this.makeWallHug(wallHugs,bestCounts,options);
       if (wh) {
         return wh;
@@ -103,7 +103,7 @@
     var bestOptions = [];
     var highestCount = sortedCounts[0][1];
     for (var i = 0; i < sortedCounts.length; i++) {
-      if (sortedCounts[i][1] === highestCount || (sortedCounts[i][1] > 25)) {
+      if (sortedCounts[i][1] === highestCount || (sortedCounts[i][1] > 100)) {
         bestOptions.push(sortedCounts[i]);
       }
     }
