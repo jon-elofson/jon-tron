@@ -27,8 +27,8 @@ The AI also calculates the area associated with each of it's three options and w
 
 The AI was also designed to randomly eschew these strategies and make random moves. The goal here was to make the AI more enjoyable to play against and also to sometimes sequester the other player to one part of the board.
 
-[area-calculation]: https://github.com/jon-elofson/jon-tron/js/ai.js#178
-[wall-hugs]: https://github.com/jon-elofson/jon-tron/js/ai.js#147
+[area-calculation]: https://github.com/jon-elofson/jon-tron/blob/master/js/ai.js#L178
+[wall-hugs]: https://github.com/jon-elofson/jon-tron/blob/master/js/ai.js#L147
 
 ## TODO
 
