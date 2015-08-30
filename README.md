@@ -1,6 +1,6 @@
 # Jon Tron
 
-[Live](www.jon-tron.com)
+[Live](http://www.jon-tron.com)
 
 ## How to Play
 
