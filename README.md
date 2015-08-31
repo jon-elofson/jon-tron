@@ -9,6 +9,8 @@ Use SPACE to restart the game!
 
 You have 3 lives. If you go out of bounds or hit a wall, you will lose a life.
 
+![tron-screenshot](images/screenshot.jpg)
+
 ## Technologies
 
 The game is written with JavaScript and jQuery.

@@ -70,9 +70,7 @@
     var random = Math.random();
     if (wallHugs.length > 0 && random < 0.98) {
       var wh = this.makeWallHug(wallHugs,bestCounts,options);
-      if (wh) {
-        return wh;
-      }
+      if (wh) {return wh;}
     }
     if (bestCounts.indexOf(cDir) !== -1 && random < 0.99) {
         return cDir;

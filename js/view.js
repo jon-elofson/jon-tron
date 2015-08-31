@@ -145,7 +145,7 @@
   View.prototype.start = function () {
   this.setKeyHandlers();
   var that = this;
-  this.interval = setInterval(function () { that.run();}, 30);
+  this.interval = window.setInterval(function () { that.run();}, 10);
 };
 
   View.prototype.run = function () {
