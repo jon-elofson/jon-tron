@@ -86,30 +86,35 @@
   };
 
   View.prototype.addGameInstructions = function () {
+    var goal = "You are the <span class='green'> green</span> line. Try to make your opponent hit a wall before you do!";
+    var $h3Goal = $("<h3>").addClass("instructions").html(goal);
     var str = " ▲ ▼ ◀ ▶ Use the arrow keys to navigate";
     var $h3Keys = $("<h3>").addClass("instructions").html(str);
     var spaceStr = "Press the SPACE bar to start a new game";
     var $h3Space = $("<h3>").addClass("instructions").html(spaceStr);
-    this.$el.append($h3Keys).append($h3Space);
+    this.$el.append($h3Goal).append($h3Keys).append($h3Space);
   };
 
   View.prototype.addLives = function () {
-    var $lives = $("<h3>").addClass("lives");
-    var str = this.determineLivesString();
-    $lives.text(str);
+    var $lives = $("<div>").addClass("lives");
+    $lives.html(this.determineLivesString());
     this.$el.append($lives);
   };
 
   View.prototype.determineLivesString = function () {
-    var str = "AI Lives: ";
+    var h3 = $('<h3>');
+    var aiLives = $('<span>').addClass('lives').text("AI Lives: ");
     for (var i = 0; i < this.aiLives; i++) {
-      str += "▲ ";
+      var aiTri = $('<span>').addClass('aiTri').text("▲ ");
+      aiLives.append(aiTri);
     }
-    str += "      | Your Lives: ";
+    h3.append(aiLives);
+    var yourLives = $('<span>').addClass('lives').text("Your Lives: ");
     for (var j = 0; j < this.yourLives; j++) {
-      str += "▲ ";
+      var yourTri = $('<span>').addClass('yourTri').text("▲ ");
+      yourLives.append(yourTri);
     }
-    return str;
+    return h3.append(yourLives);
   };
 
   View.prototype.addButton = function () {

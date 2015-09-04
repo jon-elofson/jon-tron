@@ -3,6 +3,14 @@ html {
   color: black;
 }
 
+span.aiTri {
+  color: magenta;
+}
+
+span.yourTri {
+  color: #33D685;
+}
+
 h1 {
   font-family: arial;
   position: relative;
@@ -10,6 +18,10 @@ h1 {
   text-align: center;
   color: black;
   font-weight: bold;
+}
+
+span.green {
+  color:  #33D685;
 }
 
 .trongame ul {
@@ -40,7 +52,7 @@ h3.instructions {
   text-align: center;
 }
 
-.trongame h3.lives {
+.trongame div.lives {
   font-family: arial;
   text-align: center;
 }
