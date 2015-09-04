@@ -4,6 +4,7 @@
 
 ## How to Play
 
+You are the green line. Try to get your opponent to hit a wall before you do!
 ▲ ▼ ◀ ▶ Use the arrow keys to navigate your light cycle!
 Use SPACE to restart the game!
 
