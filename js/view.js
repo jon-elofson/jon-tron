@@ -198,10 +198,10 @@
   View.prototype.setKeyHandlers = function () {
     var cycle = this.board.cycle;
     var that = this;
-    key('up',function () {if (cycle.dir != "S") {cycle.dir = "N";}});
-    key('down',function () {if (cycle.dir != "N") {cycle.dir = "S";}});
-    key('left',function () {if (cycle.dir != "E") {cycle.dir = "W";}});
-    key('right',function () {if (cycle.dir != "W") {cycle.dir = "E";}});
+    key('up',function () {if (cycle.dir != "S") {cycle.dir = "N"; return false;}});
+    key('down',function () {if (cycle.dir != "N") {cycle.dir = "S";return false;}});
+    key('left',function () {if (cycle.dir != "E") {cycle.dir = "W";return false;}});
+    key('right',function () {if (cycle.dir != "W") {cycle.dir = "E";return false;}});
     key('space',function () {if (that.board.isGameOver()) {that.restart();}});
   };
 
